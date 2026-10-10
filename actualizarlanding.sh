@@ -33,7 +33,7 @@ RAMA="home"
 DOMINIO="niacinamida10.skinoferta.cloud"
 PUERTO="3002"
 CONTENEDOR="landing-niacinamida10"
-CARPETA="/docker/landing-codigo"
+CARPETA="/docker/landing-niacinamida10"
 ARCHIVO_IMAGEN_ANTERIOR="/tmp/imagen-anterior-landing.txt"
 
 # --- Colores ---------------------------------------------------------------
