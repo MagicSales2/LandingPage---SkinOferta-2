@@ -1,0 +1,16 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+!.env.production
+
+supabase/.temp/
+state.md
+
+# El codigo de Apps Script lleva el token del webhook de Sheets: no debe
+# subirse nunca a un repo publico (por ahi sefiltraron tokens antes).
+apps-script/Code.gs
