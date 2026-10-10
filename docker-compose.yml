@@ -1,0 +1,77 @@
+# ==========================================================
+# 🐳 Landing Skin Ofertas / Protector Solar
+#
+# Configuración que funciona en producción con Traefik.
+# El sitio queda disponible en dos sitios a la vez:
+#
+#   1. http://72.61.5.135:3002   -> el puerto de la máquina, para probar
+#                                   rápido sin pasar por el dominio.
+#   2. https://niacinamida10.skinoferta.cloud
+#                                -> Traefik, con TLS de Let's Encrypt.
+#
+# Traefik lee solo el bloque de "labels" de abajo. No hay que configurar
+# nada a mano en Traefik.
+#
+# Para poner esta misma landing en otro subdominio: cambiar SOLO
+#   - el nombre del router y del servicio (aquí: "protectorsolar")
+#   - la regla Host(...)
+# Copiar el bloque de labels y cambiar esas tres líneas. Nada más.
+# ==========================================================
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: landing-niacinamida10
+
+    # Se mantiene el puerto 3002 publicado para poder revisar el sitio en
+    # crudo, sin depender del dominio ni del certificado.
+    ports:
+      - "3002:80"
+
+    restart: always
+
+    environment:
+      - NODE_ENV=production
+
+    labels:
+      # "Este contenedor quiere ser publicado por Traefik"
+      - "traefik.enable=true"
+
+      # Por qué red habla Traefik con este contenedor. La red "traefik-proxy"
+      # la crea el stack de Traefik en la máquina; no es de este proyecto.
+      - "traefik.docker.network=traefik-proxy"
+
+      # A qué dominio responde este contenedor.
+      - "traefik.http.routers.protectorsolar.rule=Host(`protectorsolar.skinoferta.cloud`)"
+
+      # Por dónde entra el tráfico: websecure es el puerto 443 de Traefik.
+      - "traefik.http.routers.protectorsolar.entrypoints=websecure"
+
+      # Pide el certificado TLS.
+      - "traefik.http.routers.protectorsolar.tls=true"
+
+      # Nombre del "certificates resolver" de Traefik. Tiene que coincidir con
+      # el del archivo de Traefik de la máquina. En este servidor se llama
+      # "letsencrypt" porque ya está así para los demás subdominios.
+      # Verificarlo con:
+      #   docker exec <contenedor-traefik> cat /etc/traefik/traefik.yml
+      - "traefik.http.routers.protectorsolar.tls.certresolver=letsencrypt"
+
+      # Puerto DENTRO del contenedor (nginx escucha en 80). El 3002 es el
+      # puerto publicado en la máquina, no este.
+      - "traefik.http.services.protectorsolar.loadbalancer.server.port=80"
+
+    networks:
+      - default
+      - traefik-proxy
+
+networks:
+  # Red compartida con Traefik. El "external: true" significa que la red ya
+  # existe en la máquina y este proyecto solo se conecta: no la crea ni la
+  # borra. Si el build falla con "network traefik-proxy not found", es que
+  # el stack de Traefik no está levantado.
+  traefik-proxy:
+    external: true

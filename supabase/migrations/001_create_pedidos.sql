@@ -1,0 +1,15 @@
+-- ============================================================================
+--  ESTE ARCHIVO YA NO SE USA
+-- ----------------------------------------------------------------------------
+--  Antes había aquí una versión insegura de la tabla de pedidos que dejaba que
+--  cualquier persona con una cuenta de Supabase pudiera ver todos los pedidos
+--  de los clientes. Se reemplazó por una versión con lista blanca de
+--  administradores.
+--
+--  Si en el pasado se ejecutó el contenido antiguo de este archivo, no hay
+--  problema: el archivo siguiente (002_integracion_kommo.sql) repara la tabla,
+--  agrega las columnas faltantes y elimina las políticas viejas.
+--
+--  Lo que debes ejecutar es SOLO:
+--      supabase/migrations/002_integracion_kommo.sql
+-- ============================================================================
