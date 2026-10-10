@@ -30,7 +30,7 @@ set -uo pipefail
 # --- Datos del sitio -------------------------------------------------------
 REPO="https://github.com/MagicSales2/LandingPage---SkinOferta-2.git"
 RAMA="home"
-DOMINIO="protectorsolar.skinoferta.cloud"
+DOMINIO="niacinamida10.skinoferta.cloud"
 PUERTO="3002"
 CONTENEDOR="landing-niacinamida10"
 CARPETA="/docker/landing-codigo"
