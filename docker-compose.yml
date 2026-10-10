@@ -1,41 +1,19 @@
-# ==========================================================
-# 🐳 Landing Skin Ofertas / Niacinamida 10%
-#
-# Configuración para producción con Traefik.
-# Disponible en:
-#   1. http://72.61.5.135:3002   -> puerto máquina
-#   2. https://niacinamida10.skinoferta.cloud  -> Traefik + TLS
-# ==========================================================
-
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-
+    build: {context: ., dockerfile: Dockerfile}
     container_name: landing-niacinamida10
-
-    ports:
-      - "3002:80"
-
+    ports: ["3002:80"]
     restart: always
-
-    environment:
-      - NODE_ENV=production
-
+    environment: [NODE_ENV=production]
     labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=traefik-proxy"
-      - "traefik.http.routers.niacinamida10.rule=Host(`niacinamida10.skinoferta.cloud`)"
-      - "traefik.http.routers.niacinamida10.entrypoints=websecure"
-      - "traefik.http.routers.niacinamida10.tls=true"
-      - "traefik.http.routers.niacinamida10.tls.certresolver=letsencrypt"
-      - "traefik.http.services.niacinamida10.loadbalancer.server.port=80"
-
-    networks:
-      - default
-      - traefik-proxy
-
+      - traefik.enable=true
+      - traefik.docker.network=traefik-proxy
+      - traefik.http.routers.niacinamida10.rule=Host(`niacinamida10.skinoferta.cloud`)
+      - traefik.http.routers.niacinamida10.entrypoints=websecure
+      - traefik.http.routers.niacinamida10.tls=true
+      - traefik.http.routers.niacinamida10.tls.certresolver=letsencrypt
+      - traefik.http.services.niacinamida10.loadbalancer.server.port=80
+    networks: [default, traefik-proxy]
 networks:
   traefik-proxy:
     external: true
