@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  /* Control estricto de iconos y SVGs para evitar cualquier renderizado gigante */
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  body {
+    background-color: #FFFFFF;
+    color: #1E293B;
+  }
+}
+
+/* Pulsación sutil para botones CTA de alto impacto */
+@keyframes cta-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px -5px rgba(5, 150, 105, 0.55);
+  }
+}
+
+.animate-cta-glow {
+  animation: cta-pulse 2.8s ease-in-out infinite;
+}
+
+/* Tabular figures for prices */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
