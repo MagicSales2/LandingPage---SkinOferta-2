@@ -38,7 +38,7 @@ pedido correcto:
 ```
 ¡Hola {{nombre}}! 👋
 
-Recibimos tu pedido de Protector Solar Anthelios. Te contamos los detalles:
+Recibimos tu pedido de Sérum Niacinamida Pura 10%. Te contamos los detalles:
 
 📦 Producto: {{producto}}
 🔢 Cantidad: {{cantidad}}
@@ -63,7 +63,7 @@ propio tono.
 ```
 ¡Hola {{nombre}}! 👋
 
-¡Listo! Recibimos tu pedido de 1 unidad de Protector Solar Anthelios.
+¡Listo! Recibimos tu pedido de 1 unidad de Sérum Niacinamida Pura 10%.
 
 💰 Total: $84.900
 💳 Pago contra entrega: le pagás al courier cuando recibas el paquete.
@@ -79,7 +79,7 @@ Recibís en 2 a 4 días hábiles. Te escribimos cuando salga el paquete.
 ```
 ¡Hola {{nombre}}! 👋
 
-¡Listo! Recibimos tu pedido de 2 unidades de Protector Solar Anthelios.
+¡Listo! Recibimos tu pedido de 2 unidades de Sérum Niacinamida Pura 10%.
 
 💰 Total: $149.900
 💳 Pago contra entrega: le pagás al courier cuando recibas el paquete.
@@ -98,7 +98,7 @@ Recibís en 2 a 4 días hábiles. Te escribimos cuando salga el paquete.
 ```
 ¡Hola {{nombre}}! 👋
 
-¡Listo! Recibimos tu pedido de 3 unidades de Protector Solar Anthelios.
+¡Listo! Recibimos tu pedido de 3 unidades de Sérum Niacinamida Pura 10%.
 
 💰 Total: $209.900
 💳 Pago contra entrega: le pagás al courier cuando recibas el paquete.
@@ -122,7 +122,7 @@ genera solo en cada pedido.
 ```
 ¡Hola {{nombre}}! 👋
 
-Gracias por tu pedido de {{cantidad}} × Protector Solar Anthelios.
+Gracias por tu pedido de {{cantidad}} × Sérum Niacinamida Pura 10%.
 Total: {{total}}.
 
 Podés pagar online con este link y te ahorrás el paso de pagarle al courier:
@@ -145,7 +145,7 @@ Etapa "Pago Online" (`107313776`).
 ```
 ¡Hola {{nombre}}! 👋
 
-¡Recibimos tu pago! Tu pedido de {{cantidad}} × Protector Solar Anthelios ya
+¡Recibimos tu pago! Tu pedido de {{cantidad}} × Sérum Niacinamida Pura 10% ya
 está confirmado por {{total}}.
 
 🚚 Lo despachamos en menos de 24 horas hábiles a la dirección que registraste.
@@ -188,7 +188,7 @@ Etapa "Entregado" (`142`).
 
 ¡Tu pedido fue entregado! 🎉
 
-Esperamos que el Protector Solar Anthelios te guste. Recordá que conviene
+Esperamos que el Sérum Niacinamida Pura 10% te guste. Recordá que conviene
 aplicarlo antes de salir para que te proteja todo el día.
 
 Si te sirvió, contale a alguien que también lo necesite. Y si quedó algún

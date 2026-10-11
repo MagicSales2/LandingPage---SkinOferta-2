@@ -291,7 +291,7 @@ Deno.serve(async (req) => {
         const { linkId, initPoint: url } = await crearLinkWompi(wompiPriv, {
           id,
           total: pedido.total_price,
-          producto: `Protector Solar Anthelios SPF 50+ x${pedido.cantidad}`,
+          producto: `Sérum Niacinamida Pura 10% x${pedido.cantidad}`,
           cantidad: pedido.cantidad,
         })
         await sb.from('pedidos').update({ wompi_payment_link_id: linkId, wompi_status: 'link_creado' }).eq('id', id)
@@ -475,7 +475,7 @@ Deno.serve(async (req) => {
       `📱 ${esc(celular)}`,
       `📍 ${esc(ciudad)}${departamento ? ', ' + esc(departamento) : ''}`,
       `🏠 ${esc(direccion)}${direccion2 ? ' · ' + esc(direccion2) : ''}`,
-      `🧴 Protector Solar Anthelios SPF 50+ · ${esc(oferta.nombre)} — ${formatearCOP(pedido.total_price)}`,
+      `🧴 Sérum Niacinamida Pura 10% · ${esc(oferta.nombre)} — ${formatearCOP(pedido.total_price)}`,
       kommoResumen,
       guiaResumen,
     ].join('\n'),

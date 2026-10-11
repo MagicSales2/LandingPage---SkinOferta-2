@@ -182,7 +182,7 @@ export async function enviarEventoTiktok(
             {
               content_type: evento.content_type || 'product',
               content_id: evento.content_ids?.[0] || evento.order_id,
-              content_name: evento.content_name || 'Protector Solar Anthelios SPF 50+',
+              content_name: evento.content_name || 'Sérum Niacinamida Pura 10%',
               quantity: cantidad,
               price: precioUnitario,
             },

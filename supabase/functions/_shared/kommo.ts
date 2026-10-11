@@ -136,7 +136,7 @@ export async function enviarAKommo(
   // Medio de pago: se puede pasar una opción distinta a la normal
   // (ej. "Pendiente de pago" mientras Wompi no confirma el pago).
   const claveMetodo = opciones.metodoPagoClave || (pedido.metodoPago === 'Contra Entrega' ? 'enum_contraentrega' : 'enum_wompi')
-  conTexto(campos, 'cf_adiciones', `Protector solar x${pedido.cantidad}`)
+  conTexto(campos, 'cf_adiciones', `Sérum niacinamida x${pedido.cantidad}`)
   conOpcion('cf_producto', `enum_producto_${pedido.cantidad}`)
   conOpcion('cf_metodo_pago', claveMetodo)
   // Link único de pago (Wompi): se guarda en el campo "Link de mercado

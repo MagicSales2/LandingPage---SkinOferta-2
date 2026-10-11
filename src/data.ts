@@ -4,7 +4,7 @@ export const COLOMBIAN_REVIEWS: Review[] = [
   {
     id: "rev-1",
     author: "Valeria Mendoza",
-    text: "¡El mejor protector solar del mundo para piel grasa! Vivo en Barranquilla donde la humedad es terrible, y este es el único que me mantiene la cara mate todo el día. No es grasoso, no deja marcas blancas y se absorbe de inmediato. Además, pagué en efectivo cuando llegó a mi casa. Excelente servicio.",
+    text: "¡Las manchas del acné por fin están desapareciendo! Llevo un mes usando este sérum de niacinamida y la diferencia es brutal: mi piel se ve más pareja, los poros de la nariz se notan mucho menos y no me saca brotes. Lo uso mañana y noche. Pagué contra entrega y llegó en 2 días.",
     rating: 5,
     date: "Ayer",
     skinType: "Piel Grasa / Sensible",
@@ -14,7 +14,7 @@ export const COLOMBIAN_REVIEWS: Review[] = [
   {
     id: "rev-2",
     author: "Sebastián Castro",
-    text: "Mi dermatóloga me recomendó el Anthelios UVMune 400 por la protección contra los rayos UVA ultra-largos que manchan la piel. Tenía miedo de recibir una imitación, pero este producto es de excelente procedencia, de calidad certificada y con fecha de vencimiento muy lejana. El envío a Medellín fue gratis y tardó solo 2 días.",
+    text: "Mi dermatóloga me recomendó niacinamida al 10% para las manchas oscuras que me dejó el acné. Probé otras marcas y esta es la única que no me irritó ni me dejó la cara pegajosa. El producto es de excelente procedencia, con calidad certificada y fecha de vencimiento muy lejana. Envío gratis a Medellín en 2 días.",
     rating: 5,
     date: "Hace 2 días",
     skinType: "Piel Mixta",
@@ -24,7 +24,7 @@ export const COLOMBIAN_REVIEWS: Review[] = [
   {
     id: "rev-3",
     author: "Camila Gómez",
-    text: "Soy muy pálida y me salen manchas con nada. Este protector me salvó. Su textura fluida es exquisita, súper líquida y ligera, no arde en los ojos para nada. Pedí la oferta de 2 unidades para ahorrar dinero y salió espectacular. El pago contra entrega me dio mucha seguridad para comprar desde TikTok.",
+    text: "Soy de piel grasa y muy sensible, y este sérum me cambió la cara. Se absorbe rapidísimo, no deja brillo y me ayudó muchísimo con las marcas rojas de los brotes. Pedí el combo de 2 unidades para no quedarme sin él. El pago contra entrega me dio mucha seguridad para comprar desde TikTok.",
     rating: 5,
     date: "Hace 4 días",
     skinType: "Piel Acnéica / Muy Sensible",
@@ -34,7 +34,7 @@ export const COLOMBIAN_REVIEWS: Review[] = [
   {
     id: "rev-4",
     author: "Dr. Mauricio Restrepo (Dermatólogo)",
-    text: "Como especialista, ratifico que el filtro Mexoryl 400 de este producto es la innovación científica más grande en fotoprotección de la última década. Protege en el rango de los 380nm-400nm donde otros protectores fallan, previniendo el daño celular profundo y envejecimiento prematuro. Su base de Airlicium para control de sebo es sumamente efectiva.",
+    text: "Como especialista, recomiendo la niacinamida al 10% cuando busco unificar el tono, controlar la producción de sebo y atenuar manchas y marcas post-acné sin irritar la piel. Además refuerza la barrera cutánea, por lo que es una opción excelente incluso para pieles sensibles.",
     rating: 5,
     date: "Hace 1 semana",
     skinType: "Recomendación Médica",
@@ -44,7 +44,7 @@ export const COLOMBIAN_REVIEWS: Review[] = [
   {
     id: "rev-5",
     author: "Diana Patricia Ortiz",
-    text: "Excelente atención y despacho súper rápido. Me llegó a Cali en menos de 48 horas. El empaque venía en excelente estado. Lo uso antes del maquillaje y me ayuda a controlar los brillos de la zona T increíblemente. ¡Vale cada peso!",
+    text: "Excelente atención y despacho súper rápido. Me llegó a Cali en menos de 48 horas. Lo uso por las noches y mi piel amanece muchísimo más pareja y luminosa. ¡Vale cada peso!",
     rating: 5,
     date: "Hace 1 semana",
     skinType: "Piel Mixta con tendencia a acné",
@@ -64,19 +64,19 @@ export const GENERAL_FAQS: FAQItem[] = [
   },
   {
     question: "¿Para qué tipo de piel está recomendado?",
-    answer: "La versión 'Oil Control Fluide' está formulada científicamente para pieles mixtas, grasas, sensibles o con tendencia al acné. Ayuda a absorber excesos de grasa y sudor gracias a su tecnología de micropartículas matificantes Airlicium."
+    answer: "El Sérum Niacinamida Pura 10% está formulado para pieles mixtas, grasas, sensibles o con tendencia al acné. También es ideal para unificar el tono y atenuar manchas y marcas post-acné. No es comedogénico, así que no tapa los poros."
   },
   {
     question: "¿Cuánto demora en llegar mi pedido?",
     answer: "Los envíos tardan entre 1 y 2 días hábiles en ciudades principales (Bogotá, Medellín, Cali, Barranquilla) y de 3 a 5 días hábiles en el resto del país. El despacho se realiza en menos de 24 horas hábiles después de llenar el formulario."
   },
   {
-    question: "¿Qué es la protección UVMune 400?",
-    answer: "Es la tecnología patentada más avanzada de La Roche-Posay. Utiliza el filtro Mexoryl 400, que protege contra los rayos UV ultra-largos (entre 380 y 400 nanómetros). Estos rayos representan el 30% de la radiación solar y son el causante número uno de manchas oscuras, arrugas y daño en el ADN celular."
+    question: "¿Qué hace la Niacinamida al 10%?",
+    answer: "La niacinamida (vitamina B3) al 10% es uno de los activos más estudiados en dermatología: ayuda a unificar el tono, difuminar manchas y marcas post-acné, minimizar la apariencia de los poros dilatados, controlar el brillo y reforzar la barrera natural de la piel."
   },
   {
-    question: "¿Deja rastro blanco en la cara o arde en los ojos?",
-    answer: "No. Su textura 'Fluide' es ultra-ligera, transparente y se absorbe inmediatamente sin dejar marcas blancas ni efecto mimo. Además, cuenta con tecnología Netlock que evita que el producto migre con el sudor, previniendo que arda en los ojos."
+    question: "¿Cómo se usa y con qué se puede combinar?",
+    answer: "Aplica 3 o 4 gotas sobre el rostro limpio y seco, mañana y noche, antes de tu crema hidratante. Se puede combinar con protector solar, ácido hialurónico y otros tratamientos. Si es tu primera vez con niacinamida, empieza usándolo una vez al día. Textura ligera que se absorbe al instante y no deja residuo grasoso."
   }
 ];
 
@@ -92,16 +92,16 @@ export const PRODUCT_OFFERS: OrderOffer[] = [
   {
     id: "offer-2",
     name: "LLEVA 2 UNIDADES (Mejor Oferta)",
-    subtitle: "¡Ahorras $30.000 (25% Descuento)!",
+    subtitle: "¡Ahorras $59.900 (27% Descuento)!",
     price: 159900,
-    savings: 30000,
+    savings: 59900,
     isPopular: true,
     quantity: 2,
   },
   {
     id: "offer-3",
     name: "LLEVA 3 UNIDADES",
-    subtitle: "¡Ahorras $129.700 (59% Descuento)!",
+    subtitle: "¡Ahorras $129.700 (39% Descuento)!",
     price: 200000,
     savings: 129700,
     isPopular: false,

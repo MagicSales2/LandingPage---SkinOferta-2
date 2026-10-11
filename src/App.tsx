@@ -19,7 +19,6 @@ import {
 import ProductBottleSVG from './components/ProductBottleSVG';
 import CheckoutForm from './components/CheckoutForm';
 import ReviewSection from './components/ReviewSection';
-import VideoTestimonials from './components/VideoTestimonials';
 import FAQSection from './components/FAQSection';
 import OrderDashboard from './components/OrderDashboard';
 import AdvisorBot from './components/AdvisorBot';
@@ -151,9 +150,8 @@ export default function App() {
     return () => clearInterval(stockInterval);
   }, []);
 
-  // El formulario vive fijo en su propia sección (#formulario-pedido), que
-  // está antes de los videos de testimonios. Al hacer clic en cualquier botón
-  // de comprar se hace scroll hasta esa sección.
+  // El formulario vive fijo en su propia sección (#formulario-pedido). Al hacer
+  // clic en cualquier botón de comprar se hace scroll hasta esa sección.
   const irAlFormulario = () => {
     const seccion = document.getElementById('formulario-pedido');
     if (!seccion) return;
@@ -306,33 +304,33 @@ export default function App() {
             </div>
 
             <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              ¿Brillo, Grasa o Manchas por el Sol? 
+              ¿Manchas, Poros Dilatados o Marcas de Acné? 
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-orange-500 mt-1">
-                Protección Invisible, Mate y Sin Color
+                Piel Pareja, Luminosa y Sin Marcas
               </span>
             </h1>
 
             <p className="text-xs md:text-base text-slate-500 font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              <strong>Anthelios UVMune 400 Oil Control Fluide SPF 50+</strong> de La Roche-Posay es la tecnología dermatológica más avanzada. Controla sebo y sudor al instante mientras bloquea los rayos UV ultra-largos que causan envejecimiento prematuro y manchas oscuras.
+              <strong>Sérum Niacinamida Pura 10%</strong> de La Roche-Posay es el tratamiento dermatológico para unificar el tono, difuminar manchas y marcas post-acné, y minimizar la apariencia de los poros. Textura ultra ligera que se absorbe al instante, sin sensación grasosa.
             </p>
 
             {/* Quick value proposition block */}
             <div className="grid grid-cols-2 gap-2 max-w-md mx-auto lg:mx-0 pt-2 text-left">
               <div className="flex items-start gap-2 p-2 bg-white rounded-xl border border-slate-100 shadow-2xs">
                 <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <p className="text-[11px] md:text-xs font-semibold text-slate-700"><strong>Control Total</strong> de brillo (Airlicium)</p>
+                <p className="text-[11px] md:text-xs font-semibold text-slate-700"><strong>Unifica el Tono</strong> y difumina manchas</p>
               </div>
               <div className="flex items-start gap-2 p-2 bg-white rounded-xl border border-slate-100 shadow-2xs">
                 <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <p className="text-[11px] md:text-xs font-semibold text-slate-700"><strong>Ultra-Largo</strong> Mexoryl 400 (Filtro exclusivo)</p>
+                <p className="text-[11px] md:text-xs font-semibold text-slate-700"><strong>Reduce Poros</strong> y marcas de acné</p>
               </div>
               <div className="flex items-start gap-2 p-2 bg-white rounded-xl border border-slate-100 shadow-2xs">
                 <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <p className="text-[11px] md:text-xs font-semibold text-slate-700"><strong>Toque Seco</strong> invisible sin residuos blancos</p>
+                <p className="text-[11px] md:text-xs font-semibold text-slate-700"><strong>Textura Ligera</strong> de rápida absorción</p>
               </div>
               <div className="flex items-start gap-2 p-2 bg-white rounded-xl border border-slate-100 shadow-2xs">
                 <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                <p className="text-[11px] md:text-xs font-semibold text-slate-700"><strong>Hipoalergénico</strong> y no comedogénico</p>
+                <p className="text-[11px] md:text-xs font-semibold text-slate-700"><strong>Piel Sensible</strong> y no comedogénico</p>
               </div>
             </div>
 
@@ -380,7 +378,7 @@ export default function App() {
               {/* Product Badges */}
               <div className="absolute top-4 left-4 flex flex-col gap-1.5 z-20 items-start">
                 <div className="bg-slate-950 text-white text-[9px] font-extrabold px-2.5 py-1.5 rounded-md shadow-xs uppercase tracking-wider">
-                  Control Sebo
+                  Anti-Manchas
                 </div>
               </div>
 
@@ -395,12 +393,12 @@ export default function App() {
 
               {/* Quick specifications panel */}
               <div className="w-full mt-4 bg-slate-50 rounded-2xl p-3 text-center border border-slate-100/60">
-                <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider block">LA MÁXIMA TECNOLOGÍA EN PROTECCIÓN</span>
-                <p className="text-xs font-black text-slate-700 mt-0.5">La Roche-Posay Anthelios UVMune 400</p>
+                <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider block">DERMATOLOGÍA AVANZADA PARA TU PIEL</span>
+                <p className="text-xs font-black text-slate-700 mt-0.5">La Roche-Posay Sérum Niacinamida Pura 10%</p>
                 <div className="flex justify-center items-center gap-1.5 mt-2.5">
-                  <span className="text-[9px] uppercase tracking-wider bg-slate-200 text-slate-800 border border-slate-300 font-bold px-2.5 py-1 rounded">SPF 50+</span>
-                  <span className="text-[9px] uppercase tracking-wider bg-slate-200 text-slate-800 border border-slate-300 font-bold px-2.5 py-1 rounded">Fluido Ultra-Ligero</span>
-                  <span className="text-[9px] uppercase tracking-wider bg-slate-200 text-slate-800 border border-slate-300 font-bold px-2.5 py-1 rounded">Toque Seco</span>
+                  <span className="text-[9px] uppercase tracking-wider bg-slate-200 text-slate-800 border border-slate-300 font-bold px-2.5 py-1 rounded">Niacinamida 10%</span>
+                  <span className="text-[9px] uppercase tracking-wider bg-slate-200 text-slate-800 border border-slate-300 font-bold px-2.5 py-1 rounded">Textura Ultra-Ligera</span>
+                  <span className="text-[9px] uppercase tracking-wider bg-slate-200 text-slate-800 border border-slate-300 font-bold px-2.5 py-1 rounded">Uso Día y Noche</span>
                 </div>
               </div>
             </div>
@@ -414,10 +412,10 @@ export default function App() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Problemas de protectores solares comunes.
+              Las manchas y marcas no se van solas.
             </h2>
             <p className="mt-2 text-sm text-slate-500 max-w-lg mx-auto">
-              La mayoría de bloqueadores son pesados, provocan brillo inmediato y no protegen contra los rayos UVA más profundos que causan manchas.
+              La mayoría de cremas para manchas son pesadas, no penetran y no tratan la causa: el exceso de pigmentación, de sebo y la piel debilitada.
             </p>
           </div>
 
@@ -428,52 +426,52 @@ export default function App() {
               <span className="bg-red-100 text-red-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider block w-max">
                 Cuidado Tradicional
               </span>
-              <h3 className="font-extrabold text-slate-900 text-base">Bloqueadores Comunes</h3>
+              <h3 className="font-extrabold text-slate-900 text-base">Cremas Comunes para Manchas</h3>
               <ul className="space-y-2.5 text-xs text-slate-600 font-medium">
                 <li className="flex items-start gap-2">
                   <span className="text-red-500 font-bold">✕</span>
-                  <span><strong>Efecto Mimo:</strong> Dejan una gruesa capa blanca que se ve fea y artificial.</span>
+                  <span><strong>No penetran:</strong> Quedan en la superficie y dejan sensación grasosa y pegajosa.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-500 font-bold">✕</span>
-                  <span><strong>Brillo Inmediato:</strong> Tapan tus poros y causan exceso de grasa y acné a las pocas horas.</span>
+                  <span><strong>Tapan los poros:</strong> Provocan más brillo y brotes en lugar de tratar la causa.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-500 font-bold">✕</span>
-                  <span><strong>Arden en los ojos:</strong> Al sudar por el calor, el producto migra y causa picazón severa.</span>
+                  <span><strong>Irritan la piel:</strong> Muchos activos agresivos dejan la piel roja y sensible.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-500 font-bold">✕</span>
-                  <span><strong>Daño Invisible:</strong> No protegen contra la radiación UVA Ultra-Larga (causante de manchas profundas).</span>
+                  <span><strong>Resultados temporales:</strong> No unifican el tono ni difuminan las marcas de verdad.</span>
                 </li>
               </ul>
             </div>
 
-            {/* The Anthelios UVMune performance representaton */}
+            {/* The Niacinamida performance representaton */}
             <div className="p-6 rounded-2xl bg-green-50/40 border border-green-200/60 space-y-3 shadow-2xs relative overflow-hidden">
               <div className="absolute right-0 top-0 bg-green-500 text-white font-mono text-[8px] font-extrabold px-3 py-1 uppercase tracking-wider rounded-bl-lg">
                 Solución Recomendada
               </div>
               <span className="bg-green-100 text-green-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider block w-max">
-                La Roche-Posay Anthelios
+                La Roche-Posay
               </span>
-              <h3 className="font-extrabold text-slate-900 text-base">UVMune 400 Oil Control</h3>
+              <h3 className="font-extrabold text-slate-900 text-base">Sérum Niacinamida Pura 10%</h3>
               <ul className="space-y-2.5 text-xs text-slate-600 font-medium">
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 font-bold">✓</span>
-                  <span><strong>Absorción en 3s:</strong> Fórmula fluida líquida ultra-ligera que queda invisible en cualquier tono de piel.</span>
+                  <span><strong>Absorción instantánea:</strong> Textura ligera que penetra rapidísimo y no deja sensación grasosa.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 font-bold">✓</span>
-                  <span><strong>Efecto Toque Seco Mate:</strong> Micro-partículas Airlicium que absorben sebo y humedad eficazmente de forma continua.</span>
+                  <span><strong>Unifica el tono:</strong> Difumina manchas y marcas post-acné para una piel visiblemente más pareja.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 font-bold">✓</span>
-                  <span><strong>Tecnología Netlock:</strong> Cobertura resistente al sudor que no se corre ni irrita los ojos.</span>
+                  <span><strong>Minimiza los poros:</strong> Controla el sebo y reduce la apariencia de poros dilatados.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 font-bold">✓</span>
-                  <span><strong>MEXORYL 400 exclusivo:</strong> El único filtro capaz de detener el 100% de la radiación UVA Ultra-Larga.</span>
+                  <span><strong>Refuerza la barrera:</strong> Niacinamida (vitamina B3) que cuida y calma incluso la piel sensible.</span>
                 </li>
               </ul>
             </div>
@@ -499,7 +497,7 @@ export default function App() {
 
             <div className="md:col-span-3 space-y-3 text-center md:text-left">
               <blockquote className="text-xs md:text-sm text-slate-300 font-medium italic leading-relaxed">
-                "El mayor causante de envejecimiento cutáneo, melasma y manchas oscuras permanentes no es el sol de fin de semana, sino los rayos UVA ultra-largos continuos del diario. Anthelios UVMune de La Roche-Posay es, científicamente, el mayor avance en fotoprotección médica para evitar de raíz el daño celular profundo."
+                "La niacinamida al 10% es uno de los activos más recomendados en consulta para unificar el tono, atenuar manchas y marcas de acné y controlar el sebo sin irritar. Es una de las pocas moléculas que trata varios problemas de la piel a la vez, incluso en pieles sensibles."
               </blockquote>
               <div className="pt-2">
                 <p className="text-xs font-black text-white leading-none">Asociación Colombiana de Dermatología</p>
@@ -519,7 +517,7 @@ export default function App() {
               🤑 COMBOS DE AHORRO CON ENVÍO GRATIS
             </span>
             <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mt-3">
-              Selecciona tu Oferta de Protector Solar
+              Selecciona tu Oferta de Sérum Niacinamida
             </h2>
             <p className="mt-1 text-xs md:text-sm text-slate-500">
               Aprovecha estos descuentos especiales para Colombia. Más unidades compradas = Mayor ahorro directo.
@@ -536,7 +534,7 @@ export default function App() {
               <div className="space-y-4">
                 <div className="text-center">
                   <h3 className="font-extrabold text-slate-900 text-lg uppercase">{ofertas[0].name}</h3>
-                  <p className="text-xs text-slate-400 mt-1">{ofertas[0].subtitle || 'Protección diaria esencial'}</p>
+                  <p className="text-xs text-slate-400 mt-1">{ofertas[0].subtitle || 'Tratamiento diario esencial'}</p>
                 </div>
 
                 <div className="py-4 border-y border-slate-100 flex flex-col items-center justify-center text-center gap-1.5">
@@ -549,7 +547,7 @@ export default function App() {
                 <ul className="space-y-2 text-xs text-slate-600">
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-500" />
-                    <span>1 Bloqueador Anthelios (50ml)</span>
+                    <span>1 Sérum Niacinamida 10% (30ml)</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-500" />
@@ -598,7 +596,7 @@ export default function App() {
                 <ul className="space-y-2 text-xs text-slate-600">
                   <li className="flex items-center gap-2 font-bold text-slate-800">
                     <Check className="w-4 h-4 text-emerald-500" />
-                    <span>2 Bloqueadores Anthelios (50ml c/u)</span>
+                    <span>2 Sérums Niacinamida 10% (30ml c/u)</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-500" />
@@ -606,11 +604,11 @@ export default function App() {
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-500" />
-                    <span>Textura ultra fluida perfecta para uso diario</span>
+                    <span>Textura ligera, ideal para usar mañana y noche</span>
                   </li>
                   <li className="flex items-center gap-2 text-green-600 font-bold bg-green-50 px-2.5 py-2 rounded-xl border border-green-200 shadow-2xs">
                     <Sparkles className="w-3.5 h-3.5 text-green-600" />
-                    <span>¡Ahorras $19.900 pesos (12% de descuento!)</span>
+                    <span>¡Ahorras {formatPrice(ofertas[1].savings || 0)} pesos!</span>
                   </li>
                 </ul>
               </div>
@@ -644,7 +642,7 @@ export default function App() {
               <div className="space-y-4">
                 <div className="text-center">
                   <h3 className="font-extrabold text-slate-900 text-lg uppercase">{ofertas[2].name}</h3>
-                  <p className="text-xs text-slate-400 mt-1">{ofertas[2].subtitle || 'Protección para toda la familia'}</p>
+                  <p className="text-xs text-slate-400 mt-1">{ofertas[2].subtitle || 'Tratamiento completo de 3 meses'}</p>
                 </div>
 
                 <div className="py-4 border-y border-slate-100 flex flex-col items-center justify-center text-center gap-1.5">
@@ -659,7 +657,7 @@ export default function App() {
                 <ul className="space-y-2 text-xs text-slate-600">
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-500" />
-                    <span>3 Bloqueadores Anthelios (50ml c/u)</span>
+                    <span>3 Sérums Niacinamida 10% (30ml c/u)</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-500" />
@@ -754,7 +752,6 @@ export default function App() {
       </section>
 
       {/* 9. TESTIMONIOS (SOCIAL PROOF) */}
-      <VideoTestimonials />
       <ReviewSection />
 
       {/* 10. FAQS */}
@@ -763,7 +760,7 @@ export default function App() {
       {/* FOOTER */}
       <footer className="bg-slate-900 text-slate-400 py-12 px-4 border-t border-slate-800 text-center font-medium text-xs">
         <div className="max-w-4xl mx-auto space-y-4">
-          <p className="text-sm font-bold text-slate-200">Anthelios UVMune 400 Oil Control Fluide 🇨🇴</p>
+          <p className="text-sm font-bold text-slate-200">Sérum Niacinamida Pura 10% 🇨🇴</p>
           <p className="max-w-md mx-auto text-[11px] text-slate-500 leading-relaxed">
             *Aplican términos y condiciones. El envío gratuito está sujeto a cobertura nacional en las principales regiones de Colombia. La Roche-Posay es una marca registrada de L'Oreal Group. Esta página es propiedad de un distribuidor independiente autorizado de Colombia.
           </p>

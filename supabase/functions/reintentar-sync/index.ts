@@ -22,7 +22,7 @@ const CORS_HEADERS = {
 }
 
 const COLUMNAS_PEDIDO =
-  'id, numero, client_name, client_phone, client_email, document_id, department, city, address, address2, notes, offer_name, quantity, total_price, payment_method, utm_source, utm_medium, utm_campaign, utm_content, utm_term, referrer, status, kommo_estado, kommo_lead_id, kommo_contact_id, wompi_payment_link_id, guia_numero, guia_estado, guia_error'
+  'id, numero, client_name, client_phone, client_email, document_id, department, city, address, address2, notes, offer_id, offer_name, quantity, total_price, payment_method, utm_source, utm_medium, utm_campaign, utm_content, utm_term, referrer, status, kommo_estado, kommo_lead_id, kommo_contact_id, wompi_payment_link_id, guia_numero, guia_estado, guia_error'
 
 function json(cuerpo: unknown, estado = 200) {
   return new Response(JSON.stringify(cuerpo), {

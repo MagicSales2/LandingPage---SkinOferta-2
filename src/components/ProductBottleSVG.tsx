@@ -14,15 +14,15 @@ export default function ProductBottleSVG({ className = "w-64 h-auto", showBadge 
       {/* Container to crop excess white borders and highlight the bottle with subtle orange hover glow */}
       <div className="relative w-full aspect-[4/5] overflow-hidden bg-white/95 rounded-2xl flex items-center justify-center border border-slate-100/65 shadow-xs transition-all duration-300 group-hover:border-orange-400/30 group-hover:shadow-[0_15px_35px_rgba(240,90,40,0.22)]">
         <img
-          src={`${import.meta.env.BASE_URL}images/anthelios-uvmune-400.jpg`}
-          alt="La Roche-Posay Anthelios UVMune 400 Oil Control Fluide"
-          className="w-full h-full object-contain scale-[1.7] -translate-y-[2%] select-none transition-all duration-300 transform group-hover:scale-[1.76] group-hover:-translate-y-[3%]"
+          src={`${import.meta.env.BASE_URL}images/serum-niacinamida-10.jpg`}
+          alt="La Roche-Posay Sérum Niacinamida Pura 10%"
+          className="w-full h-full object-contain select-none transition-all duration-300 transform group-hover:scale-105"
         />
       </div>
       
       {/* Matte dry touch overlay simulation on hover */}
       <div className="absolute top-[40%] right-[10%] bg-green-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full scale-0 group-hover:scale-100 transition-all duration-300 pointer-events-none drop-shadow-md z-15">
-        ¡Efecto Matificante!
+        ¡Reduce Manchas!
       </div>
     </div>
   );

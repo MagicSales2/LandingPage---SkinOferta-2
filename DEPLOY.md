@@ -1,7 +1,7 @@
-# Anthelios — landing de ventas
+# Sérum Niacinamida 10% — landing de ventas
 
-Protector solar Anthelios. Pedidos por Wompi o contra entrega, sincronizados
-con Kommo, Telegram y Google Sheets.
+Sérum Niacinamida Pura 10% de La Roche-Posay. Pedidos por Wompi o contra
+entrega, sincronizados con Kommo, Telegram y Google Sheets.
 
 ## Publicar
 
@@ -116,7 +116,7 @@ confusión más común al trabajar con esto:
 |---|---|---|
 | Carpeta en el servidor | `/docker/landing-niacinamida10` | Cuando se clona el repo |
 | Contenedor | `landing-niacinamida10` | `container_name` del compose |
-| Imagen | `landing-codigo-web` | la genera `docker compose build` |
+| Imagen | `landing-niacinamida10-web` | la genera `docker compose build` |
 
 Los tres nombres son independientes. El script `/actualizarlanding` no depende
 de ninguno: detecta el contenedor por el puerto que publica y arma el nombre
@@ -128,9 +128,9 @@ Copiar el bloque de `labels` y cambiar **solo** tres cosas:
 
 | Qué | Ahora | Cambiar a |
 |---|---|---|
-| Nombre del router | `protectorsolar` | `elnuevosubdominio` |
-| Nombre del servicio | `protectorsolar` | `elnuevosubdominio` |
-| Regla `Host(...)` | `protectorsolar.skinoferta.cloud` | `elnuevosubdominio.skinoferta.cloud` |
+| Nombre del router | `niacinamida10` | `elnuevosubdominio` |
+| Nombre del servicio | `niacinamida10` | `elnuevosubdominio` |
+| Regla `Host(...)` | `niacinamida10.skinoferta.cloud` | `elnuevosubdominio.skinoferta.cloud` |
 
 El nombre del router tiene que ser único en toda la máquina: si dos landings
 usan el mismo, Traefik se confunde y deja de publicar uno de los dos.
@@ -290,7 +290,7 @@ Quedarse con el sitio viejo por un aviso es peor que avisar y seguir.
 Para ver qué pasó:
 
 ```bash
-cd /docker/landing-codigo && docker compose logs --tail 30
+cd /docker/landing-niacinamida10 && docker compose logs --tail 30
 ```
 
 Para volver atrás a mano:
@@ -304,7 +304,7 @@ docker run -d --name landing-niacinamida10 -p 3002:80 --restart always $(cat /tm
 ```
 
 Eso deja el sitio andando en `http://72.61.5.135:3002`, pero el dominio puede
-quedar sin HTTPS hasta que se repita `cd /docker/landing-codigo && docker compose up -d`,
+quedar sin HTTPS hasta que se repita `cd /docker/landing-niacinamida10 && docker compose up -d`,
 porque el contenedor que se crea así no lleva las etiquetas de Traefik.
 
 ## Cambiar el dominio o el contenedor

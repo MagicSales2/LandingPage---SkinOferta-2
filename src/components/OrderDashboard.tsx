@@ -377,7 +377,7 @@ export default function OrderDashboard({ ordersUpdatedToggle, onOrderDelete, isO
                             <p className="text-[10px] text-slate-500 font-bold mt-0.5">Doc: {o.documentId}</p>
                           )}
                           <a
-                            href={`https://api.whatsapp.com/send?phone=57${o.clientPhone}&text=Hola%20${encodeURIComponent(o.clientName)}!%20Te%20hablamos%20de%20la%20tienda%20para%20confirmar%20tu%20pedido%20de%20Anthelios`}
+                            href={`https://api.whatsapp.com/send?phone=57${o.clientPhone}&text=Hola%20${encodeURIComponent(o.clientName)}!%20Te%20hablamos%20de%20la%20tienda%20para%20confirmar%20tu%20pedido%20de%20Niacinamida`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-[10px] text-green-600 hover:underline font-bold mt-0.5 inline-block"

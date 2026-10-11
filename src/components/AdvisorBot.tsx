@@ -17,7 +17,7 @@ export default function AdvisorBot() {
     {
       id: 'init-msg',
       sender: 'bot',
-      text: '¡Hola! 👋 Soy **Dermy**, tu asesor de cuidado facial experto en protectores solares. ¿En qué te puedo asesorar hoy para proteger tu piel con el nuevo **Anthelios UVMune 400**?',
+      text: '¡Hola! 👋 Soy **Dermy**, tu asesor de cuidado facial experto en manchas y textura de la piel. ¿En qué te puedo asesorar hoy con el nuevo **Sérum Niacinamida Pura 10%**?',
       timestamp: new Date(),
       options: [
         '💰 Precios y Promociones',
@@ -56,7 +56,7 @@ export default function AdvisorBot() {
 
     if (text.includes('precio') || text.includes('promocion') || text.includes('descuento') || text.includes('costo') || text.includes('vale') || text.includes('cuesta') || text.includes('pesos') || text.includes('combos') || text.includes('oferta')) {
       return {
-        reply: '💰 **Promociones del Día (Envío Gratis):**\n\n• **1 Unidad:** *$84.900 COP* (Protección básica diaria)\n• **2 Unidades (RECOMENDADO):** *$149.900 COP* (¡Ahorras **$19.900 COP** / 12% Descuento!)\n• **3 Unidades (Ahorro Familiar):** *$209.900 COP* (¡Ahorras **$44.800 COP** / 18% Descuento!)\n\n*Recuerda:* Todas nuestras ofertas incluyen **envío totalmente gratis** y facilidad de **pago contra entrega** en todo Colombia.',
+        reply: '💰 **Promociones del Día (Envío Gratis):**\n\n• **1 Unidad:** *$109.900 COP* (Ideal para probarlo)\n• **2 Unidades (RECOMENDADO):** *$159.900 COP* (¡Ahorras **$59.900 COP** / 27% Descuento!)\n• **3 Unidades (Mejor Ahorro):** *$200.000 COP* (¡Ahorras **$129.700 COP** / 39% Descuento!)\n\n*Recuerda:* Todas nuestras ofertas incluyen **envío totalmente gratis** y facilidad de **pago contra entrega** en todo Colombia.',
         options: ['🛍️ Pedir Ahora Contra Entrega', '🚚 ¿Cómo funciona el envío?', '🛡️ Respaldo y Confianza']
       };
     }
@@ -64,7 +64,7 @@ export default function AdvisorBot() {
     if (text.includes('envio') || text.includes('pagar') || text.includes('recibir') || text.includes('contraentrega') || text.includes('contra entrega') || text.includes('efectivo') || text.includes('transportadora') || text.includes('pagar al recibir')) {
       return {
         reply: '🚚 **Envío Nacional Gratis y Pago Contra Entrega:**\n\nOfrecemos **Envío Gratis** a toda Colombia. Pagas en efectivo al mensajero únicamente cuando te entregue el paquete en la puerta de tu hogar.\n\nEs 100% libre de riesgos: ¡no pagas nada por adelantado!',
-        options: ['🛍️ Pedir Ahora Contra Entrega', '⏱️ ¿Cuánto tarda en llegar?', '🧴 Tipo de piel de Anthelios']
+        options: ['🛍️ Pedir Ahora Contra Entrega', '⏱️ ¿Cuánto tarda en llegar?', '🧴 Tipo de piel ideal']
       };
     }
 
@@ -77,8 +77,8 @@ export default function AdvisorBot() {
 
     if (text.includes('piel') || text.includes('grasa') || text.includes('mixta') || text.includes('sensible') || text.includes('acne') || text.includes('brillo') || text.includes('mate') || text.includes('sebo')) {
       return {
-        reply: '🧴 **Especial para Piel Grasa y Sensible:**\n\nLa versión que recibes es **La Roche-Posay Anthelios UVMune 400 Oil Control Fluide**.\n\nEstá especialmente formulada para pieles mixtas a grasas y con tendencia al acné o excesiva sensibilidad. Cuenta con la tecnología de micropartículas **Airlicium** que atrapa de inmediato el sebo y sudor de tu cara, brindando un **acabado mate seco invisible** sin tapar los poros.',
-        options: ['👁️ ¿Arde en los ojos?', '⚪ ¿Deja residuos blancos?', '💰 Ver Precios y Descuentos']
+        reply: '🧴 **Especial para Manchas, Poros y Piel Sensible:**\n\nEl producto que recibes es **La Roche-Posay Sérum Niacinamida Pura 10%**.\n\nEstá formulado para pieles mixtas, grasas, sensibles y con tendencia al acné. La niacinamida al 10% ayuda a **unificar el tono**, atenuar manchas y marcas post-acné, **minimizar los poros** dilatados y controlar el brillo, sin dejar sensación grasosa.',
+        options: ['💰 Ver Precios y Descuentos', '🛍️ Pedir Ahora Contra Entrega', '🧴 ¿Cómo se usa?']
       };
     }
 
@@ -91,7 +91,7 @@ export default function AdvisorBot() {
 
     if (text.includes('blanco') || text.includes('mimo') || text.includes('rastro') || text.includes('absorbe') || text.includes('ojos') || text.includes('arde') || text.includes('lagrimeo')) {
       return {
-        reply: '👁️ *Fórmula Líquida Invisible y Segura:* \n\n• **Toque Invisible:** Es un fluido líquido ultra-ligero que se absorbe en tan solo **3 segundos** sin dejar parches blancos ni efecto mimo, sin importar tu tono de piel.\n• **Cero picazón ocular:** Con tecnología *Netlock*, el producto aguanta el agua y el sudor de la cara sin correrse. ¡Está dermatológica y oftalmológicamente probado para no irritar tus ojos!',
+        reply: '✨ *Textura Ligera y Cuidadosa:* \n\n• **Se absorbe al instante:** Es un sérum ligero que penetra rapidísimo sin dejar sensación grasosa, pegajosa ni residuo alguno.\n• **No irrita:** La niacinamida es un activo bien tolerado, incluso por pieles sensibles. Úsalo con la piel limpia, mañana y noche, y sella con tu humectante.',
         options: ['🧴 Tipo de Piel Recomendado', '💰 Ver Precios']
       };
     }
@@ -105,14 +105,14 @@ export default function AdvisorBot() {
 
     if (text.includes('como') || text.includes('aplicar') || text.includes('rutina') || text.includes('uso') || text.includes('agita')) {
       return {
-        reply: '🧴 **Uso Correcto en tu Rutina:**\n\n1. **Agita enérgicamente** el envase de tu Anthelios para homogeneizar el fluido.\n2. Aplica una cantidad del tamaño de una moneda en tu mano.\n3. Distribúyela uniformemente por la cara, el cuello y las orejas antes de exponerte al sol.\n4. Se recomienda reaplicarlo cada 2 a 3 horas si estás bajo el sol directo o si sudas mucho.',
-        options: ['⚪ ¿Deja parches blancos?', '🛡️ Respaldo y Confianza']
+        reply: '🧴 **Uso Correcto en tu Rutina:**\n\n1. Lava tu rostro y sécalo suavemente.\n2. Aplica 3 a 4 gotas del **Sérum Niacinamida 10%** en rostro y cuello.\n3. Deja absorber unos segundos y sella con tu humectante.\n4. Úsalo **mañana y noche** para ver resultados visibles en manchas y poros en pocas semanas. En el día, termina con protector solar.',
+        options: ['⚪ ¿Irrita o deja residuo?', '🛡️ Respaldo y Confianza']
       };
     }
 
     // Default response
     return {
-      reply: '🤖 *¡Entendido!* Soy un asistente virtual automatizado para **Anthelios UVMune 400**.\n\nPara brindarte la mejor asesoría o ayudarte a comprar, selecciona una de estas opciones rápidas o escríbeme otro mensaje:',
+      reply: '🤖 *¡Entendido!* Soy un asistente virtual automatizado para **Sérum Niacinamida Pura 10%**.\n\nPara brindarte la mejor asesoría o ayudarte a comprar, selecciona una de estas opciones rápidas o escríbeme otro mensaje:',
       options: [
         '💰 Ver Precios y Promociones',
         '🚚 Envío Gratis y Pago',

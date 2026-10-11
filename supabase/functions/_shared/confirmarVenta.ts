@@ -25,7 +25,7 @@ import { avisoSheets } from './sheets.ts'
 import { enviarEventoTiktok } from './tiktok.ts'
 
 export const COLUMNAS_PEDIDO =
-  'id, numero, client_name, client_phone, client_email, document_id, department, city, address, address2, notes, offer_name, quantity, total_price, payment_method, utm_source, utm_medium, utm_campaign, utm_content, utm_term, referrer, status, kommo_estado, kommo_lead_id, wompi_payment_link_id, wompi_transaction_id, wompi_status'
+  'id, numero, client_name, client_phone, client_email, document_id, department, city, address, address2, notes, offer_id, offer_name, quantity, total_price, payment_method, utm_source, utm_medium, utm_campaign, utm_content, utm_term, referrer, status, kommo_estado, kommo_lead_id, wompi_payment_link_id, wompi_transaction_id, wompi_status'
 
 const formatearCOP = (n: number) => '$ ' + n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 
@@ -44,7 +44,7 @@ async function avisarPagoConfirmado(fila: any, kommoResumen: string, guiaResumen
     `👤 ${esc(fila.client_name)}`,
     `📱 ${esc(fila.client_phone)}`,
     `📍 ${esc(fila.city)}${fila.department ? ', ' + esc(fila.department) : ''}`,
-    `🧴 Protector Solar Anthelios SPF 50+ · ${esc(fila.offer_name ?? '')} — ${formatearCOP(Number(fila.total_price))}`,
+    `🧴 Sérum Niacinamida Pura 10% · ${esc(fila.offer_name ?? '')} — ${formatearCOP(Number(fila.total_price))}`,
     kommoResumen,
   ]
   if (guiaResumen) lineas.push(guiaResumen)
@@ -103,8 +103,8 @@ async function avisarTiktok(sb: SupabaseClient, fila: any) {
       document_id: fila.document_id,
       value: Number(fila.total_price),
       currency: 'COP',
-      content_name: fila.offer_name || 'Protector Solar Anthelios SPF 50+',
-      content_ids: [fila.offer_id || 'anthelios-protector-solar'],
+      content_name: fila.offer_name || 'Sérum Niacinamida Pura 10%',
+      content_ids: [fila.offer_id || 'niacinamida-serum-10'],
       quantity: Number(fila.quantity),
       user_agent: fila.user_agent,
       referrer: fila.referrer,
