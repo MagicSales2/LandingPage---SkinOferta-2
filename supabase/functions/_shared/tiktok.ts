@@ -60,7 +60,7 @@ const EVENTOS_ESTANDAR = [
 
 // Dominio del sitio, por si algún evento llega sin page_url. Vive en el secreto
 // SITIO_URL para no tener que recompilar cuando cambia el dominio.
-const SITIO_POR_DEFECTO = (Deno.env.get('SITIO_URL') || 'https://protectorsolar.skinoferta.cloud').replace(/\/+$/, '') + '/'
+const SITIO_POR_DEFECTO = (Deno.env.get('SITIO_URL') || 'https://niacinamida10.skinoferta.cloud').replace(/\/+$/, '') + '/'
 
 // TikTok exige SHA-256 en minúsculas y sin espacios sobrantes.
 async function sha256(valor: string): Promise<string> {

@@ -34,7 +34,7 @@ const CORS_HEADERS = {
 // Vive en el secreto SITIO_URL de Supabase para no tener que recompilar el
 // backend cada vez que cambia el dominio. El valor de abajo es solo el plan B
 // por si el secreto no llegara a estar.
-const SITIO = (Deno.env.get('SITIO_URL') || 'https://protectorsolar.skinoferta.cloud').replace(/\/+$/, '')
+const SITIO = (Deno.env.get('SITIO_URL') || 'https://niacinamida10.skinoferta.cloud').replace(/\/+$/, '')
 
 type PedidoEntrada = {
   clientName?: string
