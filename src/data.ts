@@ -83,7 +83,7 @@ export const GENERAL_FAQS: FAQItem[] = [
 export const PRODUCT_OFFERS: OrderOffer[] = [
   {
     id: "offer-1",
-    name: "1 UNIDAD",
+    name: "Sérum Niacinamida Pura 10% x1",
     subtitle: "Ideal para probarlo",
     price: 109900,
     isPopular: false,
@@ -91,7 +91,7 @@ export const PRODUCT_OFFERS: OrderOffer[] = [
   },
   {
     id: "offer-2",
-    name: "LLEVA 2 UNIDADES (Mejor Oferta)",
+    name: "Sérum Niacinamida Pura 10% x2 (Mejor Oferta)",
     subtitle: "¡Ahorras $59.900 (27% Descuento)!",
     price: 159900,
     savings: 59900,
@@ -100,7 +100,7 @@ export const PRODUCT_OFFERS: OrderOffer[] = [
   },
   {
     id: "offer-3",
-    name: "LLEVA 3 UNIDADES",
+    name: "Sérum Niacinamida Pura 10% x3",
     subtitle: "¡Ahorras $129.700 (39% Descuento)!",
     price: 200000,
     savings: 129700,
