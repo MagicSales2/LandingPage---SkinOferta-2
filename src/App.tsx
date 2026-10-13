@@ -32,9 +32,9 @@ import { getOfertas } from './lib/supabaseClient';
 
 // URL oculta para abrir el panel de administrador (sin botón visible).
 // Cambia esta clave si algún día quieres usar otra. Solo funciona con este
-// hash exacto en la dirección, p. ej. .../#/panel-anthelios-4781
-const ADMIN_HASH = '#/panel-anthelios-4781';
+// hash exacto en la dirección, p. ej. .../#/panel-niacinamida10
 
+const ADMIN_HASH = '#/panel-niacinamida10';
 export default function App() {
   const [selectedOfferId, setSelectedOfferId] = useState<string>('offer-2'); // Pre-select Mejor Oferta
   const [ordersUpdatedToggle, setOrdersUpdatedToggle] = useState<boolean>(false);

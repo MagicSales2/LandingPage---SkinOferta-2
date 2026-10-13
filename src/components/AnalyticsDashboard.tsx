@@ -27,11 +27,6 @@ function horaBogota(iso: string): number {
   return (new Date(iso).getUTCHours() - 5 + 24) % 24;
 }
 
-// Día YYYY-MM-DD en hora de Colombia, para agrupar la serie temporal.
-function diaBogota(iso: string): string {
-  return new Date(new Date(iso).getTime() - 5 * 3600 * 1000).toISOString().slice(0, 10);
-}
-
 function dominioReferrer(ref: string | null | undefined): string {
   if (!ref) return '';
   try {
@@ -75,27 +70,60 @@ function Bloque({ titulo, children }: { titulo: string; children: React.ReactNod
   );
 }
 
+type Preset = '7' | '30' | '90' | '365' | 'todo' | 'custom';
+
 export default function AnalyticsDashboard({ orders }: Props) {
-  const [rango, setRango] = useState<7 | 30 | 90>(30);
+  const [preset, setPreset] = useState<Preset>('30');
+  const [customDesde, setCustomDesde] = useState('');
+  const [customHasta, setCustomHasta] = useState('');
   const [visitas, setVisitas] = useState<VisitaAnalitica[] | null>(null);
   const [cargando, setCargando] = useState(true);
   const [sinMigracion, setSinMigracion] = useState(false);
 
+  // Rango a consultar: presets o fechas a medida (cualquier rango, sin tope:
+  // 1 año, todo el historial o dos fechas cualquiera).
+  const rangoFetch = useMemo(() => {
+    const ahora = new Date();
+    if (preset === 'todo') {
+      return {
+        desde: '2020-01-01T00:00:00.000Z',
+        hasta: ahora.toISOString(),
+        etiqueta: 'todo el historial',
+      };
+    }
+    if (preset === 'custom' && customDesde && customHasta) {
+      const desdeMs = new Date(customDesde + 'T00:00:00-05:00').getTime();
+      const hastaMs = new Date(customHasta + 'T00:00:00-05:00').getTime() + 86400000;
+      if (Number.isFinite(desdeMs) && Number.isFinite(hastaMs) && hastaMs > desdeMs) {
+        return {
+          desde: new Date(desdeMs).toISOString(),
+          hasta: new Date(hastaMs).toISOString(),
+          etiqueta: `${customDesde} → ${customHasta}`,
+        };
+      }
+    }
+    const dias = preset === 'custom' ? 30 : Number(preset);
+    return {
+      desde: new Date(Date.now() - dias * 86400000).toISOString(),
+      hasta: ahora.toISOString(),
+      etiqueta: `últimos ${dias} días`,
+    };
+  }, [preset, customDesde, customHasta]);
+
   useEffect(() => {
     setCargando(true);
     setSinMigracion(false);
-    const hasta = new Date().toISOString();
-    const desde = new Date(Date.now() - rango * 86400000).toISOString();
-    getAnaliticaVisitas(desde, hasta).then((rows) => {
+    getAnaliticaVisitas(rangoFetch.desde, rangoFetch.hasta).then((rows) => {
       if (rows === null) setSinMigracion(true);
       setVisitas(rows ?? []);
       setCargando(false);
     });
-  }, [rango]);
+  }, [rangoFetch]);
 
   const datos = useMemo(() => {
     const rows = visitas ?? [];
-    const desdeMs = Date.now() - rango * 86400000;
+    const desdeMs = new Date(rangoFetch.desde).getTime();
+    const hastaMs = new Date(rangoFetch.hasta).getTime();
     const unicos = new Set(rows.map((v) => v.visitante_id)).size;
     const medidas = rows.map((v) => v.duracion_seg).filter((d): d is number => typeof d === 'number' && d >= 0);
     const prom = medidas.length ? Math.round(medidas.reduce((a, b) => a + b, 0) / medidas.length) : null;
@@ -103,9 +131,10 @@ export default function AnalyticsDashboard({ orders }: Props) {
     const mediana = ordenadas.length ? ordenadas[Math.floor(ordenadas.length / 2)] : null;
     const cortas = medidas.filter((d) => d < 10).length;
 
-    const pedidos = orders.filter(
-      (o) => new Date(o.date).getTime() >= desdeMs && o.status !== 'cancelled',
-    );
+    const pedidos = orders.filter((o) => {
+      const t = new Date(o.date).getTime();
+      return t >= desdeMs && t < hastaMs && o.status !== 'cancelled';
+    });
     const ventas = pedidos.filter(
       (o) => (o.paymentMethod?.includes('Contra') && o.status !== 'cancelled') || o.status === 'pagado',
     );
@@ -124,18 +153,20 @@ export default function AnalyticsDashboard({ orders }: Props) {
     const porHora = new Array<number>(24).fill(0);
     for (const v of rows) porHora[horaBogota(v.inicio)] += 1;
 
-    const conteoDia = new Map<string, number>();
-    for (const v of rows) {
-      const k = diaBogota(v.inicio);
-      conteoDia.set(k, (conteoDia.get(k) ?? 0) + 1);
-    }
+    // Serie temporal: si el rango es largo, se agrupa en bloques para que el
+    // gráfico no tenga más de ~90 barras (ej. 1 año → bloques semanales).
+    const diasDiff = Math.max(1, Math.round((hastaMs - desdeMs) / 86400000));
+    const porBloque = Math.max(1, Math.ceil(diasDiff / 90));
     const serie: { etiqueta: string; cantidad: number }[] = [];
-    for (let i = rango - 1; i >= 0; i--) {
-      const iso = new Date(Date.now() - i * 86400000 - 5 * 3600 * 1000).toISOString();
-      serie.push({
-        etiqueta: iso.slice(8, 10) + '/' + iso.slice(5, 7),
-        cantidad: conteoDia.get(iso.slice(0, 10)) ?? 0,
-      });
+    for (let t = desdeMs; t < hastaMs; t += porBloque * 86400000) {
+      const iso = new Date(t).toISOString();
+      serie.push({ etiqueta: iso.slice(8, 10) + '/' + iso.slice(5, 7), cantidad: 0 });
+    }
+    for (const v of rows) {
+      const ms = new Date(v.inicio).getTime();
+      if (!Number.isFinite(ms) || ms < desdeMs || ms >= hastaMs || serie.length === 0) continue;
+      const idx = Math.min(serie.length - 1, Math.floor((ms - desdeMs) / (porBloque * 86400000)));
+      serie[idx].cantidad += 1;
     }
     const maxDia = Math.max(1, ...serie.map((d) => d.cantidad));
 
@@ -143,9 +174,9 @@ export default function AnalyticsDashboard({ orders }: Props) {
       rows, unicos, prom, mediana, cortas, medidas: medidas.length,
       pedidos: pedidos.length, ventas: ventas.length, conv,
       porDispositivo, porNavegador, porCiudad, porPais, porFuente, porCampana,
-      porHora, serie, maxDia,
+      porHora, serie, maxDia, etiqueta: rangoFetch.etiqueta,
     };
-  }, [visitas, orders, rango]);
+  }, [visitas, orders, rangoFetch]);
 
   if (cargando) {
     return <p className="text-xs text-slate-400 font-bold py-10 text-center">Cargando analítica…</p>;
@@ -166,20 +197,52 @@ export default function AnalyticsDashboard({ orders }: Props) {
 
   return (
     <div className="py-6 space-y-4">
-      <div className="flex gap-2">
-        {([7, 30, 90] as const).map((d) => (
+      <div className="flex flex-wrap items-center gap-2">
+        {(
+          [
+            ['7', '7 días'],
+            ['30', '30 días'],
+            ['90', '90 días'],
+            ['365', '1 año'],
+            ['todo', 'Todo'],
+          ] as const
+        ).map(([valor, etiqueta]) => (
           <button
-            key={d}
-            onClick={() => setRango(d)}
+            key={valor}
+            onClick={() => setPreset(valor)}
             className={`px-4 py-2 rounded-lg text-xs font-black border transition-colors cursor-pointer ${
-              rango === d
+              preset === valor
                 ? 'bg-slate-900 text-white border-slate-900'
                 : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
             }`}
           >
-            {d} días
+            {etiqueta}
           </button>
         ))}
+        <span className="text-[10px] font-bold text-slate-400 uppercase ml-1">o a medida:</span>
+        <input
+          type="date"
+          value={customDesde}
+          max={customHasta || undefined}
+          onChange={(e) => {
+            setCustomDesde(e.target.value);
+            setPreset('custom');
+          }}
+          className="text-xs px-3 py-2 bg-white border border-slate-200 rounded-lg outline-none text-slate-700 font-bold focus:ring-1 focus:ring-orange-500"
+          title="Desde"
+        />
+        <span className="text-slate-400 font-black">→</span>
+        <input
+          type="date"
+          value={customHasta}
+          min={customDesde || undefined}
+          onChange={(e) => {
+            setCustomHasta(e.target.value);
+            setPreset('custom');
+          }}
+          className="text-xs px-3 py-2 bg-white border border-slate-200 rounded-lg outline-none text-slate-700 font-bold focus:ring-1 focus:ring-orange-500"
+          title="Hasta"
+        />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -191,7 +254,7 @@ export default function AnalyticsDashboard({ orders }: Props) {
 
       <div className="bg-white border border-slate-100 rounded-xl p-4">
         <p className="text-xs font-black text-slate-900 uppercase tracking-wide mb-3">
-          Embudo · últimos {rango} días
+          Embudo · {datos.etiqueta}
         </p>
         <div className="flex flex-col md:flex-row items-stretch gap-2 text-center">
           {[

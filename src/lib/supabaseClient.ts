@@ -271,22 +271,32 @@ export interface VisitaAnalitica {
   pantalla: string | null;
 }
 
-// Lee las visitas de un rango (ISO). Requiere la migración 016 (columnas
-// nuevas + política visitas_select_admin); si falta, devuelve null.
+// Lee las visitas de un rango (ISO), paginando de a 1000 hasta 20000 filas
+// para que sirva con rangos largos (1 año o todo el historial).
+// Requiere la migración 016 (columnas nuevas + política visitas_select_admin);
+// si falta, devuelve null.
 export async function getAnaliticaVisitas(desde: string, hasta: string): Promise<VisitaAnalitica[] | null> {
   if (!supabase) return null;
-  const { data, error } = await supabase
-    .from('visitas')
-    .select('id, visitante_id, inicio, duracion_seg, ruta, referrer, utm_source, utm_medium, utm_campaign, ciudad, region, pais, dispositivo, so, navegador, pantalla')
-    .gte('inicio', desde)
-    .lt('inicio', hasta)
-    .order('inicio', { ascending: false })
-    .limit(5000);
-  if (error) {
-    console.error('Error leyendo visitas:', error.message);
-    return null;
+  const columnas =
+    'id, visitante_id, inicio, duracion_seg, ruta, referrer, utm_source, utm_medium, utm_campaign, ciudad, region, pais, dispositivo, so, navegador, pantalla';
+  const todas: VisitaAnalitica[] = [];
+  const POR_PAGINA = 1000;
+  for (let pagina = 0; pagina < 20; pagina++) {
+    const { data, error } = await supabase
+      .from('visitas')
+      .select(columnas)
+      .gte('inicio', desde)
+      .lt('inicio', hasta)
+      .order('inicio', { ascending: false })
+      .range(pagina * POR_PAGINA, pagina * POR_PAGINA + POR_PAGINA - 1);
+    if (error) {
+      console.error('Error leyendo visitas:', error.message);
+      return null;
+    }
+    todas.push(...((data || []) as VisitaAnalitica[]));
+    if (!data || data.length < POR_PAGINA) break;
   }
-  return (data || []) as VisitaAnalitica[];
+  return todas;
 }
 
 export async function updateOrderStatusInSupabase(orderId: string, status: string): Promise<boolean> {
