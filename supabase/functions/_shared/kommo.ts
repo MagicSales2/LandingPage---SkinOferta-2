@@ -124,6 +124,7 @@ export async function enviarAKommo(
   conTexto(campos, 'cf_ciudad', pedido.ciudad)
   conTexto(campos, 'cf_municipio', pedido.ciudad)
   conTexto(campos, 'cf_entrega', `${pedido.ciudad}, ${pedido.departamento}`)
+  conTexto(campos, 'cf_mensaje', [pedido.ciudad, pedido.departamento].filter(Boolean).join(', '))
   conTexto(campos, 'cf_cantidad', pedido.cantidad)
   conTexto(campos, 'cf_total', pedido.total_price)
   conTexto(rastreo, 'cf_utm_source', pedido.utm_source)
