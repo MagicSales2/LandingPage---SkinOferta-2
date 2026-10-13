@@ -190,32 +190,43 @@ export async function enviarAKommo(
     { campoId: num('cf_metodo_pago'), enumId: num(claveMetodo) },
   ]
 
-  await dormir(2500)
-  for (const req of requeridos) {
-    if (!req.campoId || !req.enumId) continue
-    for (let i = 0; i < 3; i++) {
-      const revisa = await call(`/leads/${leadIdNum}`)
-      const queda = (revisa?.custom_fields_values ?? []).some(
-        (c: any) => c.field_id === req.campoId && (c.values ?? []).some((v: any) => Number(v.enum_id) === req.enumId),
-      )
-      if (queda) break
-      await dormir(600)
-      await call(`/leads/${leadIdNum}`, {
-        method: 'PATCH',
-        body: JSON.stringify({ id: leadIdNum, custom_fields_values: [{ field_id: req.campoId, values: [{ enum_id: req.enumId }] }] }),
-      })
-      await dormir(600)
-    }
-  }
-
-  const revisaFinal = await call(`/leads/${leadIdNum}`)
-  const confirma = (req: { campoId: number; enumId: number }) =>
-    !req.campoId || !req.enumId
-      ? true
-      : (revisaFinal?.custom_fields_values ?? []).some(
+  // Verificación y reparación de campos (la automatización de Kommo a veces
+  // los borra justo después de crear la venta). Si ESTA parte falla por red,
+  // NO se rompe todo: la venta YA existe, así que se devuelve el lead con los
+  // campos marcados como pendientes. El aviso sale en Telegram CON el enlace
+  // a la venta, y no se duplica nada.
+  let camposPendientes = requeridos
+  try {
+    await dormir(2500)
+    for (const req of requeridos) {
+      if (!req.campoId || !req.enumId) continue
+      for (let i = 0; i < 3; i++) {
+        const revisa = await call(`/leads/${leadIdNum}`)
+        const queda = (revisa?.custom_fields_values ?? []).some(
           (c: any) => c.field_id === req.campoId && (c.values ?? []).some((v: any) => Number(v.enum_id) === req.enumId),
         )
-  const camposPendientes = requeridos.filter((req) => !confirma(req))
+        if (queda) break
+        await dormir(600)
+        await call(`/leads/${leadIdNum}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ id: leadIdNum, custom_fields_values: [{ field_id: req.campoId, values: [{ enum_id: req.enumId }] }] }),
+        })
+        await dormir(600)
+      }
+    }
+
+    const revisaFinal = await call(`/leads/${leadIdNum}`)
+    const confirma = (req: { campoId: number; enumId: number }) =>
+      !req.campoId || !req.enumId
+        ? true
+        : (revisaFinal?.custom_fields_values ?? []).some(
+            (c: any) => c.field_id === req.campoId && (c.values ?? []).some((v: any) => Number(v.enum_id) === req.enumId),
+          )
+    camposPendientes = requeridos.filter((req) => !confirma(req))
+  } catch (err) {
+    console.warn('No se pudo verificar/reparar campos en Kommo (la venta sí existe):', err instanceof Error ? err.message : err)
+    camposPendientes = requeridos
+  }
 
   return {
     leadId: leadIdNum,
