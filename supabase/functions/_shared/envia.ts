@@ -426,7 +426,7 @@ export async function generarGuiaPedido(
     }
     const peso = Math.max(Number(cfg.peso_por_unidad || 0.3), 0.1) * Math.max(pedido.quantity, 1)
     const paquete: Paquete = {
-      contenido: `Sérum niacinamida x${pedido.quantity}`,
+      contenido: `Sérum Niacinamida Pura 10% x${pedido.quantity}`,
       peso,
       valor: Number(pedido.total_price),
     }

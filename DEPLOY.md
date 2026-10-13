@@ -164,7 +164,7 @@ docker inspect landing-niacinamida10 --format '{{.Image}}' > /tmp/imagen-anterio
 ```
 
 Si el nombre del resolver no es `letsencrypt`, hay que corregir
-`traefik.http.routers.protectorsolar.tls.certresolver` en
+`traefik.http.routers.niacinamida10.tls.certresolver` en
 `docker-compose.yml` **antes** de continuar.
 
 Ojo con el punto 3: las etiquetas de Traefik son parte del contenedor, así que
