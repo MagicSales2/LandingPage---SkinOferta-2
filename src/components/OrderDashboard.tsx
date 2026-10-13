@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2, Award, RefreshCw, XCircle, LogOut, Check, ExternalLink } from 'lucide-react';
 import { Order } from '../types';
+import AnalyticsDashboard from './AnalyticsDashboard';
 import {
   getOrdersFromSupabase,
   updateOrderStatusInSupabase,
@@ -32,6 +33,7 @@ export default function OrderDashboard({ ordersUpdatedToggle, onOrderDelete, isO
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [dbStatus, setDbStatus] = useState<'checking' | 'configured' | 'missing'>('checking');
+  const [vista, setVista] = useState<'pedidos' | 'analitica'>('pedidos');
 
   // Check Supabase config and restore session on mount
   useEffect(() => {
@@ -263,6 +265,29 @@ export default function OrderDashboard({ ordersUpdatedToggle, onOrderDelete, isO
               </div>
             </div>
 
+            <div className="flex gap-2 mt-4">
+              <button
+                onClick={() => setVista('pedidos')}
+                className={`px-4 py-2 rounded-lg text-xs font-black border transition-colors cursor-pointer ${
+                  vista === 'pedidos'
+                    ? 'bg-slate-900 text-white border-slate-900'
+                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                Pedidos
+              </button>
+              <button
+                onClick={() => setVista('analitica')}
+                className={`px-4 py-2 rounded-lg text-xs font-black border transition-colors cursor-pointer ${
+                  vista === 'analitica'
+                    ? 'bg-slate-900 text-white border-slate-900'
+                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                Analítica de visitas
+              </button>
+            </div>
+
             {aviso && (
               <div className={`mt-4 px-4 py-3 rounded-lg border text-xs font-bold ${
                 aviso.tipo === 'ok'
@@ -273,6 +298,10 @@ export default function OrderDashboard({ ordersUpdatedToggle, onOrderDelete, isO
               </div>
             )}
 
+            {vista === 'analitica' ? (
+              <AnalyticsDashboard orders={orders} />
+            ) : (
+            <>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6">
               <div className="bg-slate-50 border border-slate-100 rounded-xl p-4">
                 <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Ventas Totales</p>
@@ -516,6 +545,8 @@ export default function OrderDashboard({ ordersUpdatedToggle, onOrderDelete, isO
                 </table>
               )}
             </div>
+            </>
+            )}
           </div>
         )}
       </div>

@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 import { createClient, SupabaseClient, AuthSession } from '@supabase/supabase-js';
 import { Order, OrderOffer } from '../types';
+import { leerIdVisitante } from './visitas';
 
 // URL y clave pública del proyecto. Son datos públicos por diseño: la clave
 // anónima solo permite crear pedidos y leer lo público. El build de GitHub las
@@ -100,6 +101,9 @@ export async function createOrder(datos: NuevoPedido): Promise<PedidoCreado> {
       // como page_url de los eventos de TikTok, para que en Events Manager
       // aparezca el dominio real y no un valor por defecto.
       pageUrl: window.location.href,
+      // Id del visitante (el mismo de registrar-visita): une el pedido con
+      // sus visitas para medir la conversión en la analítica.
+      visitanteId: leerIdVisitante(),
     },
   });
 
@@ -244,6 +248,45 @@ export async function getOrdersFromSupabase(): Promise<Order[] | null> {
     return null;
   }
   return (data || []).map(mapRowToOrder);
+}
+
+// ─── Analítica de visitas (solo administradores) ───
+
+export interface VisitaAnalitica {
+  id: number;
+  visitante_id: string;
+  inicio: string;
+  duracion_seg: number | null;
+  ruta: string | null;
+  referrer: string | null;
+  utm_source: string | null;
+  utm_medium: string | null;
+  utm_campaign: string | null;
+  ciudad: string | null;
+  region: string | null;
+  pais: string | null;
+  dispositivo: string | null;
+  so: string | null;
+  navegador: string | null;
+  pantalla: string | null;
+}
+
+// Lee las visitas de un rango (ISO). Requiere la migración 016 (columnas
+// nuevas + política visitas_select_admin); si falta, devuelve null.
+export async function getAnaliticaVisitas(desde: string, hasta: string): Promise<VisitaAnalitica[] | null> {
+  if (!supabase) return null;
+  const { data, error } = await supabase
+    .from('visitas')
+    .select('id, visitante_id, inicio, duracion_seg, ruta, referrer, utm_source, utm_medium, utm_campaign, ciudad, region, pais, dispositivo, so, navegador, pantalla')
+    .gte('inicio', desde)
+    .lt('inicio', hasta)
+    .order('inicio', { ascending: false })
+    .limit(5000);
+  if (error) {
+    console.error('Error leyendo visitas:', error.message);
+    return null;
+  }
+  return (data || []) as VisitaAnalitica[];
 }
 
 export async function updateOrderStatusInSupabase(orderId: string, status: string): Promise<boolean> {

@@ -61,6 +61,9 @@ type PedidoEntrada = {
   // La IP no se puede leer desde el navegador (la esconde el navegador), así
   // que se toma del encabezado que pone Supabase/Cloudflare.
   clientIp?: string
+  // Id del visitante (el mismo que usa registrar-visita). Sirve para unir el
+  // pedido con sus visitas y medir la conversión visita → pedido.
+  visitanteId?: string
 }
 
 function texto(valor: unknown, max: number): string {
@@ -245,6 +248,7 @@ Deno.serve(async (req) => {
       // utm_content, que está libre y ya se lee para el reporte de campañas.
       // Así el webhook de Wompi lo puede recuperar y mandarlo a TikTok.
       utm_content: texto(entrada.ttclid, 200) || texto(entrada.utm?.utm_content, 100) || null,
+      visitante_id: texto(entrada.visitanteId, 100) || null,
     })
     .select('id, numero, total_price, utm_source, utm_medium, utm_campaign, utm_content, utm_term, referrer')
     .single()

@@ -30,7 +30,7 @@ function urlFuncion(): string {
   return `${SUPABASE_URL}/functions/v1/registrar-visita`;
 }
 
-function idVisitante(): string {
+export function leerIdVisitante(): string {
   const clave = 'anthelios_visitante';
   let id = localStorage.getItem(clave);
   if (!id) {
@@ -41,6 +41,10 @@ function idVisitante(): string {
     localStorage.setItem(clave, id);
   }
   return id;
+}
+
+function idVisitante(): string {
+  return leerIdVisitante();
 }
 
 export function iniciarRastreoVisitas() {
@@ -70,6 +74,9 @@ export function iniciarRastreoVisitas() {
       ttclid: params.get('ttclid') || undefined,
       ttp: leerCookieTtp(),
       pageUrl: window.location.href,
+      // Tamaño de la pantalla (ej. "390x844"): dice si entra por celular
+      // chico, PC grande, etc. para decisiones de diseño.
+      pantalla: `${window.innerWidth}x${window.innerHeight}`,
     }),
   })
     .then((r) => r.json().catch(() => null))
