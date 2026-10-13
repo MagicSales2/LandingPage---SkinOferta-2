@@ -217,41 +217,54 @@ Deno.serve(async (req) => {
   // --- 4) Guardar el pedido
   const id = generarId()
   const esPagoOnline = metodoPago !== 'Contra Entrega'
-  const { data: guardado, error: errorGuardado } = await sb
-    .from('pedidos')
-    .insert({
-      id,
-      client_name: nombre,
-      client_phone: celular,
-      client_email: correo,
-      document_id: documento,
-      department: departamento,
-      city: ciudad,
-      address: direccion,
-      address2: direccion2 || null,
-      notes: notas || null,
-      offer_id: oferta.id,
-      offer_name: oferta.nombre,
-      quantity: oferta.cantidad,
-      total_price: oferta.precio,
-      payment_method: metodoPago,
-      // Con pago online el pedido espera el pago real antes de ser venta.
-      status: esPagoOnline ? 'pendiente_pago' : 'new',
-      utm_source: texto(entrada.utm?.utm_source, 100) || null,
-      utm_medium: texto(entrada.utm?.utm_medium, 100) || null,
-      utm_campaign: texto(entrada.utm?.utm_campaign, 100) || null,
-      utm_content: texto(entrada.utm?.utm_content, 100) || null,
-      utm_term: texto(entrada.utm?.utm_term, 100) || null,
-      referrer: texto(entrada.referrer, 300) || null,
-      user_agent: texto(entrada.userAgent, 300) || null,
-      // El ttclid no tiene columna propia en la tabla, así que se guarda en
-      // utm_content, que está libre y ya se lee para el reporte de campañas.
-      // Así el webhook de Wompi lo puede recuperar y mandarlo a TikTok.
-      utm_content: texto(entrada.ttclid, 200) || texto(entrada.utm?.utm_content, 100) || null,
-      visitante_id: texto(entrada.visitanteId, 100) || null,
-    })
-    .select('id, numero, total_price, utm_source, utm_medium, utm_campaign, utm_content, utm_term, referrer')
-    .single()
+  const nuevoPedido: Record<string, unknown> = {
+    id,
+    client_name: nombre,
+    client_phone: celular,
+    client_email: correo,
+    document_id: documento,
+    department: departamento,
+    city: ciudad,
+    address: direccion,
+    address2: direccion2 || null,
+    notes: notas || null,
+    offer_id: oferta.id,
+    offer_name: oferta.nombre,
+    quantity: oferta.cantidad,
+    total_price: oferta.precio,
+    payment_method: metodoPago,
+    // Con pago online el pedido espera el pago real antes de ser venta.
+    status: esPagoOnline ? 'pendiente_pago' : 'new',
+    utm_source: texto(entrada.utm?.utm_source, 100) || null,
+    utm_medium: texto(entrada.utm?.utm_medium, 100) || null,
+    utm_campaign: texto(entrada.utm?.utm_campaign, 100) || null,
+    utm_term: texto(entrada.utm?.utm_term, 100) || null,
+    referrer: texto(entrada.referrer, 300) || null,
+    user_agent: texto(entrada.userAgent, 300) || null,
+    // El ttclid no tiene columna propia en la tabla, así que se guarda en
+    // utm_content, que está libre y ya se lee para el reporte de campañas.
+    // Así el webhook de Wompi lo puede recuperar y mandarlo a TikTok.
+    utm_content: texto(entrada.ttclid, 200) || texto(entrada.utm?.utm_content, 100) || null,
+    visitante_id: texto(entrada.visitanteId, 100) || null,
+  }
+  const columnasLectura =
+    'id, numero, total_price, utm_source, utm_medium, utm_campaign, utm_content, utm_term, referrer'
+  let guardado: any = null
+  let errorGuardado: any = null
+  {
+    const intento = await sb.from('pedidos').insert(nuevoPedido).select(columnasLectura).single()
+    guardado = intento.data
+    errorGuardado = intento.error
+    // Si la migración 016 aún no se corrió, la columna visitante_id no
+    // existe: se reintenta sin ella para NO perder la venta.
+    if (errorGuardado && /visitante_id/i.test(String((errorGuardado as any)?.message ?? ''))) {
+      console.warn('Reintentando pedido sin visitante_id (falta migración 016)')
+      delete nuevoPedido.visitante_id
+      const reintento = await sb.from('pedidos').insert(nuevoPedido).select(columnasLectura).single()
+      guardado = reintento.data
+      errorGuardado = reintento.error
+    }
+  }
 
   if (errorGuardado || !guardado) {
     console.error('No se pudo guardar el pedido:', errorGuardado)

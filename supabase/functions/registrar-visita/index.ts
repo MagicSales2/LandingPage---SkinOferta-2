@@ -130,27 +130,44 @@ Deno.serve(async (req) => {
       Promise.resolve(parsearDispositivo(userAgent)),
     ])
 
-    const { data: insertada, error } = await sb
-      .from('visitas')
-      .insert({
-        visitante_id: visitanteId,
-        ruta: texto(cuerpo.ruta, 200) || null,
-        referrer: texto(cuerpo.referrer, 300) || null,
-        utm_source: texto(cuerpo.utm?.utm_source, 100) || null,
-        utm_medium: texto(cuerpo.utm?.utm_medium, 100) || null,
-        utm_campaign: texto(cuerpo.utm?.utm_campaign, 100) || null,
-        user_agent: userAgent || null,
-        ciudad: geo.ciudad || null,
-        region: geo.region || null,
-        pais: geo.pais || null,
-        dispositivo: disp.dispositivo,
-        so: disp.so,
-        navegador: disp.navegador,
-        pantalla: texto(cuerpo.pantalla, 20) || null,
-        inicio: new Date().toISOString(),
-      })
-      .select('id')
-      .single()
+    const nuevaVisita: Record<string, unknown> = {
+      visitante_id: visitanteId,
+      ruta: texto(cuerpo.ruta, 200) || null,
+      referrer: texto(cuerpo.referrer, 300) || null,
+      utm_source: texto(cuerpo.utm?.utm_source, 100) || null,
+      utm_medium: texto(cuerpo.utm?.utm_medium, 100) || null,
+      utm_campaign: texto(cuerpo.utm?.utm_campaign, 100) || null,
+      user_agent: userAgent || null,
+      inicio: new Date().toISOString(),
+    }
+    const extraVisita: Record<string, unknown> = {
+      ciudad: geo.ciudad || null,
+      region: geo.region || null,
+      pais: geo.pais || null,
+      dispositivo: disp.dispositivo,
+      so: disp.so,
+      navegador: disp.navegador,
+      pantalla: texto(cuerpo.pantalla, 20) || null,
+    }
+    let insertada: { id: number } | null = null
+    let error: any = null
+    {
+      const intento = await sb
+        .from('visitas')
+        .insert({ ...nuevaVisita, ...extraVisita })
+        .select('id')
+        .single()
+      insertada = intento.data as { id: number } | null
+      error = intento.error
+      // Si la migración 016 aún no se corrió, las columnas nuevas no
+      // existen: se reintenta con las de siempre para no perder la visita.
+      if (error && /ciudad|region|pais|dispositivo|navegador|pantalla|\bso\b/i.test(String(error?.message ?? ''))) {
+        console.warn('Reintentando visita sin columnas 016 (falta migración)')
+        const reintento = await sb.from('visitas').insert(nuevaVisita).select('id').single()
+        insertada = reintento.data as { id: number } | null
+        error = reintento.error
+      }
+    }
 
     if (error || !insertada) {
       console.error('No se pudo registrar la visita:', error)
