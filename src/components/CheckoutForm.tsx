@@ -159,6 +159,14 @@ export default function CheckoutForm({ selectedOfferId, onOfferSelect, onOrderSu
       paymentMethod: metodoPago
     };
 
+    // Se guardan los datos de contacto en localStorage para que la página de
+    // gracias (PagoGracias) pueda mandarlos al píxel cuando se confirme el pago
+    // con Wompi. Así el evento Purchase del píxel lleva email y phone_number.
+    localStorage.setItem(`pedido_${creado.orderId}`, JSON.stringify({
+      email: formData.clientEmail.trim(),
+      phone: formData.clientPhone,
+    }));
+
     // OJO: aquí NO se manda el evento "Purchase" porque el cliente todavía no
     // ha pagado. Se manda "Lead" (dejó sus datos), que sí es verdad.
     // "Purchase" solo debe enviarse cuando el pago esté confirmado.
@@ -166,6 +174,9 @@ export default function CheckoutForm({ selectedOfferId, onOfferSelect, onOrderSu
     // El event_id es el id del pedido: es el mismo que usa el servidor por la
     // Events API para el SubmitForm, así que si llega por los dos lados TikTok
     // cuenta un solo lead.
+    //
+    // email y phone_number: TikTok marca error "Crítico" cuando más del 10% de
+    // los eventos llegan sin estos parámetros. El píxel los hashea automáticamente.
     trackPixelEvent('Lead', {
       event_id: newOrder.id,
       value: newOrder.totalPrice,
@@ -174,6 +185,8 @@ export default function CheckoutForm({ selectedOfferId, onOfferSelect, onOrderSu
       content_name: newOrder.offerName,
       content_type: 'product',
       num_items: newOrder.quantity,
+      email: formData.clientEmail.trim(),
+      phone_number: `+57${formData.clientPhone}`,
     });
 
     // AddPaymentInfo: el pedido quedó registrado y la persona ya dejó sus datos
@@ -186,7 +199,8 @@ export default function CheckoutForm({ selectedOfferId, onOfferSelect, onOrderSu
     // ninguna lista oficial de TikTok: entraba como evento personalizado, se
     // veía en los reportes pero NO podía usarse como objetivo de optimización.
     // "AddPaymentInfo" es el estándar equivalente (objetivo Sales) y además
-    // lleva event_id, que antes faltaba.
+    // lleva event_id, que antes faltaba. También lleva email y phone_number
+    // para el emparejamiento avanzado de TikTok.
     trackPixelEvent('AddPaymentInfo', {
       event_id: newOrder.id,
       value: newOrder.totalPrice,
@@ -195,6 +209,8 @@ export default function CheckoutForm({ selectedOfferId, onOfferSelect, onOrderSu
       content_name: newOrder.offerName,
       content_type: 'product',
       num_items: newOrder.quantity,
+      email: formData.clientEmail.trim(),
+      phone_number: `+57${formData.clientPhone}`,
     });
 
     // Con Contra Entrega el pago ocurre cuando el cliente recibe el paquete,
@@ -210,7 +226,9 @@ export default function CheckoutForm({ selectedOfferId, onOfferSelect, onOrderSu
         content_id: newOrder.offerId,
         content_name: newOrder.offerName,
         content_type: 'product',
-        num_items: newOrder.quantity
+        num_items: newOrder.quantity,
+        email: formData.clientEmail.trim(),
+        phone_number: `+57${formData.clientPhone}`,
       });
     }
 

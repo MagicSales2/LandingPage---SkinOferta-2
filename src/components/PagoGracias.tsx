@@ -19,6 +19,18 @@ export default function PagoGracias() {
     const params = new URLSearchParams(q);
     const id = params.get('pedido')?.trim() || '';
     pedidoId.current = id || null;
+    // Los datos de contacto del pedido se guardaron en localStorage cuando se
+    // creó el pedido (CheckoutForm). Se leen acá para mandarlos al píxel junto
+    // con el evento Purchase: TikTok exige email o phone_number en los eventos
+    // de compra y marca error "Crítico" cuando más del 10% llegan sin ellos.
+    let datosPedido: { email?: string; phone?: string } = {};
+    if (id) {
+      try {
+        datosPedido = JSON.parse(localStorage.getItem(`pedido_${id}`) || '{}');
+      } catch {
+        datosPedido = {};
+      }
+    }
     // Wompi devuelve esta página con la firma del pedido; permite que el
     // servidor confirme que quien mira es quien pagó (y muestre su nombre).
     const sec = params.get('sec')?.trim() || '';
@@ -50,6 +62,10 @@ export default function PagoGracias() {
               content_name: `Pedido ${res.orderId}`,
               content_type: 'product',
               num_items: 1,
+              // Advanced Matching: sin email o phone_number TikTok marca el
+              // evento como "Crítico" y baja el CPA. El píxel los hashea solo.
+              ...(datosPedido.email ? { email: datosPedido.email } : {}),
+              ...(datosPedido.phone ? { phone_number: `+57${datosPedido.phone}` } : {}),
             });
             setEstado('ok');
           } else if (intentos < 10) {
